@@ -1,0 +1,4 @@
+{ "translations": {
+    "usage" : "用量"
+},"pluralForm" :""Project-Id-Version: ownCloud Core 8.0.0\nReport-Msgid-Bugs-To: translations@owncloud.org\nPOT-Creation-Date: 2015-07-24 10:17+0800\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nLanguage: \nMIME-Version: 1.0\nContent-Type: text/plain; charset=CHARSET\nContent-Transfer-Encoding: 8bit"
+}

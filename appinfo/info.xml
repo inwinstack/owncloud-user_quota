@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<info>
+    <id>user_quota</id>
+    <name>User quota</name>
+    <description>User_quota</description>
+    <licence>AGPL</licence>
+    <author>simon</author>
+    <version>0.0.2</version>
+    <namespace>User_Quota</namespace>
+    <category>other</category>
+    <dependencies>
+        <owncloud min-version="8.1" />
+    </dependencies>
+</info>
