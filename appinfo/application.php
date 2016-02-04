@@ -4,7 +4,8 @@ namespace OCA\User_Quota\Appinfo;
 use \OCP\AppFramework\App;
 use OCP\IContainer;
 use \OCA\User_Quota\Controller\Quota;
-
+use \OCA\User_Quota\Controller\FileQuantity;
+use \OCA\User_Quota\FileCount;
 class Application extends App {
 
     public function __construct(array $urlParms = array()){
@@ -22,6 +23,26 @@ class Application extends App {
                 $c->query('AppName'),
                 $c->query('Request')
             );
-       });
+        });
+
+        $container->registerService('FileQuantityController', function($c){
+            return new FileQuantity(
+                
+                $c->query('AppName'),
+                $c->query('Request'),
+                $c->query('FileCount')
+            );
+        });
+
+        $container->registerService('FileCount', function($c) {
+            /** @var \OC\Server $server */
+			$server = $c->query('ServerContainer');
+
+            return new FileCount(
+                $server->getDatabaseConnection(),
+				$server->getUserSession()
+            );
+        });
+
     }
 }

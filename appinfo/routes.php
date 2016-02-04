@@ -24,6 +24,7 @@ $application = new Application();
 $application->registerRoutes($this,[
     'routes' => [
        ['name' => 'Quota#getQuota', 'url' => '/getQuota', 'verb' => 'POST'],
-       ['name' => 'Quota#getUsedFromFilecache', 'url' => '/getUsed', 'verb' => 'POST']
+       ['name' => 'Quota#getUsedFromFilecache', 'url' => '/getUsed', 'verb' => 'POST'],
+       ['name' => 'FileQuantity#getItemsCount', 'url' => '/getItemsCount', 'verb' => 'GET']
     ]
 ]);
