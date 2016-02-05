@@ -18,7 +18,9 @@
  * it's instantiated in there
  */
 
-namespace OCA\User_Quota\AppInfo;
+namespace OCA\User_Quota\Appinfo;
+
+use OCP\API;
 
 $application = new Application();
 $application->registerRoutes($this,[
@@ -28,3 +30,19 @@ $application->registerRoutes($this,[
        ['name' => 'FileQuantity#getItemsCount', 'url' => '/getItemsCount', 'verb' => 'GET']
     ]
 ]);
+
+API::register('get',
+       '/apps/user_quota/api/v1/getQuota',
+       array('\OCA\User_Quota\API\Quota', 'getQuota'),
+       'user_quota');
+
+API::register('get',
+       '/apps/user_quota/api/v1/getUsed',
+       array('\OCA\User_Quota\API\Quota', 'getUsed'),
+       'user_quota');
+
+API::register('get',
+       '/apps/user_quota/api/v1/getItemsCount',
+       array('\OCA\User_Quota\API\Quota', 'getItemsCount'),
+       'user_quota');
+
