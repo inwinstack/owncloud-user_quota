@@ -12,9 +12,12 @@
 namespace OCA\User_Quota\AppInfo;
 
 use OCP\AppFramework\App;
+use OCP\User;
 
 $app = new App('user_quota');
 $container = $app->getContainer();
-
-\OCP\Util::addScript( 'user_quota', "usage");
-\OCP\Util::addStyle( 'user_quota', "style");
+if(User::isLoggedIn()) {
+    \OCP\Util::addScript( 'user_quota', "usage");
+    \OCP\Util::addScript( 'user_quota', "personal");
+    \OCP\Util::addStyle( 'user_quota', "style");
+}
