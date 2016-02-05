@@ -8,11 +8,11 @@ use OCP\AppFramework\Http\DataResponse;
 
 class Quota extends Controller{
     
-    protected $quota;
+    private $usersquota;
 
-
-    public function __construct($AppName, IRequest $request) {
+    public function __construct($AppName, IRequest $request, $usersquota) {
         parent::__construct($AppName, $request);
+        $this->usersquota = $usersquota;
     }
     
     /*
@@ -22,11 +22,9 @@ class Quota extends Controller{
      * see lib/public/files/fileinfo.php
      * @NoAdminRequired
      */
-    public function getQuota($user = ''){
+    public function getQuota($user = '') {
         $user = $user !== '' ? $user : User::getUser();
-        $data = [];
-        $data['quota'] = \OC_Util::getUserQuota($user);
-
+        $data = $this->usersquota->getQuota($user); 
         return new DataResponse(array('data' => $data , 'status' => 'success'));
     }
 
@@ -34,14 +32,9 @@ class Quota extends Controller{
      * @NoAdminRequired
      */
     public function getUsedFromFilecache($uids = NULL){
-        $users = [];
-        $users = explode(",",$uids);
+        $usedspace = $this->usersquota->getUsedFromFilecache($uids); 
         
-        if($users == "") {
-            array_push($users, $uids);
-        }
-        
-        return new DataResponse(array('data' => \OCP\Util::getUserUsedSpace($users), 'status' => 'success'));
+        return new DataResponse(array('data' => $usedspace, 'status' => 'success'));
     }
 }
 ?>

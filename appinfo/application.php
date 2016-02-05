@@ -6,6 +6,7 @@ use OCP\IContainer;
 use \OCA\User_Quota\Controller\Quota;
 use \OCA\User_Quota\Controller\FileQuantity;
 use \OCA\User_Quota\FileCount;
+use \OCA\User_Quota\UsersQuota;
 class Application extends App {
 
     public function __construct(array $urlParms = array()){
@@ -21,7 +22,8 @@ class Application extends App {
             return new Quota(
                 
                 $c->query('AppName'),
-                $c->query('Request')
+                $c->query('Request'),
+                $c->query('UsersQuota')
             );
         });
 
@@ -43,6 +45,12 @@ class Application extends App {
 				$server->getUserSession()
             );
         });
+
+        $container->registerService('UsersQuota', function($c) {
+
+            return new UsersQuota();
+        });
+
 
     }
 }
