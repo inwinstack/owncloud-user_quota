@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <info>
     <id>user_quota</id>
-    <name>User quota</name>
-    <description>User_quota</description>
+    <name>User Quota</name>
+    <description>This application provides APIs for getting user quota, used space, file and folder numbers. In users page, administrative users can view all users' used space. And in user personal page, it shows the file and folder numbers.</description>
     <licence>AGPL</licence>
     <author>simon</author>
     <version>0.0.2</version>
