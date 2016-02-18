@@ -10,22 +10,53 @@
         return quotadiv.attr('style').replace(/width:(.*%).*/g, '$1');
     }
 
+    function createContain() {
+        var contains = $('<div>').attr({id : 'contains', class : 'section'}).append('<h2>'+t('user_quota', 'Contains')+'</h2>');
+
+        contains.append($('<div>').attr({class : 'loading-contains'}));
+         
+        return contains; 
+    }
+
+    function setItemsQuantity(files, folders) {
+        var files_contain = $('<div>').attr({class:'contains-item'});
+        var folders_contain = $('<div>').attr({class:'contains-item'});
+        var url = window.location.href.replace(/(.*)\/index.php.*/g,'$1') + '/core/img/filetypes/';
+        var files_span = $('<span>').attr({class:'contains-item-text'});
+        var folders_span = $('<span>').attr({class:'contains-item-text'});
+        var contain_div = $('<div>');
+
+        files_contain.append($('<div>').attr({class:'contains-item-icon', style:'background-image:url('+ url +'text.svg); background-size:32px;'}));
+        files_span.text(' x '+files);
+        files_contain.append(files_span);
+
+        folders_contain.append($('<div>').attr({class:'contains-item-icon', style:'background-image:url('+ url +'folder.svg); background-size:32px;'}));
+        folders_span.text(' x '+folders);
+        folders_contain.append(folders_span);
+        
+        contain_div.append(folders_contain);
+        contain_div.append(files_contain);
+
+        $('#contains').find('.loading-contains').replaceWith(contain_div);
+    }
+
     $(function () {
         var quotatext = $('#quota #quotatext');
 
         if(quotatext.length) {
-            var used = '<strong>' + getUsed($('#quota div')) + '</strong>';
+            var used = getUsed($('#quota div'));
+            var span = $('<span>').attr({class : 'quota-ratio'});
 
-            quotatext.append('  (Used : ' + used + ')');
-
+            span.append(used);
+            quotatext.append(span);
+            $('#quota').after(createContain());
+            
+            
             getQuantity().done(function (result) {
-                var files = '<strong>' + result.files + '</strong>';
-                var folders = '<strong>' + result.folders + '</strong>';
+                setItemsQuantity(result.files, result.folders);    
 
-                quotatext.append('  Items Count : (');
-                quotatext.append('files : ' + files + ', ');
-                quotatext.append('folders : ' + folders + ')');
             });
+           
         }
     });
 

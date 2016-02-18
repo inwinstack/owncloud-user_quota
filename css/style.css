@@ -4,3 +4,9 @@
     margin: 0 auto;
 }
 
+.loading-contains {
+    background: url('../../../core/img/loading.gif') no-repeat;
+    height: 35px;
+    margin: 0 auto;
+}
+
