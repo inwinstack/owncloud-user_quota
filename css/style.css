@@ -10,3 +10,23 @@
     margin: 0 auto;
 }
 
+.quota-ratio{
+    font-weight: bolder;
+    position: absolute;
+    right: 1em;
+}
+
+.contains-item{
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.contains-item-icon{
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+}
+
+.contains-item-text{
+    vertical-align: super;
+}

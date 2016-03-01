@@ -21,16 +21,15 @@
     function setItemsQuantity(files, folders) {
         var files_contain = $('<div>').attr({class:'contains-item'});
         var folders_contain = $('<div>').attr({class:'contains-item'});
-        var url = window.location.href.replace(/(.*)\/index.php.*/g,'$1') + '/core/img/filetypes/';
         var files_span = $('<span>').attr({class:'contains-item-text'});
         var folders_span = $('<span>').attr({class:'contains-item-text'});
         var contain_div = $('<div>');
 
-        files_contain.append($('<div>').attr({class:'contains-item-icon', style:'background-image:url('+ url +'text.svg); background-size:32px;'}));
+        files_contain.append($('<div>').attr({class:'contains-item-icon', style:'background-image:url("../../core/img/filetypes/text.svg"); background-size:32px;'}));
         files_span.text(' x '+files);
         files_contain.append(files_span);
 
-        folders_contain.append($('<div>').attr({class:'contains-item-icon', style:'background-image:url('+ url +'folder.svg); background-size:32px;'}));
+        folders_contain.append($('<div>').attr({class:'contains-item-icon', style:'background-image:url("../../core/img/filetypes/folder.svg"); background-size:32px;'}));
         folders_span.text(' x '+folders);
         folders_contain.append(folders_span);
         
