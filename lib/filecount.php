@@ -13,6 +13,8 @@ class FileCount {
 
 	/** @var IUserSession */
 	protected $userSession;
+    
+    protected $mimetypes;
 
 	/**
 	 * @param IDBConnection $connection
@@ -21,8 +23,26 @@ class FileCount {
 	public function __construct(IDBConnection $connection, IUserSession $userSession) {
 		$this->connection = $connection;
 		$this->userSession = $userSession;
+        $this->mimetypes = $this->getmimetypes();
+        
 	}
-   
+
+    /**
+     * this function get all mimetypes id and mimetype
+     * @return array
+     */
+    private function getmimetypes() {
+        $query = $this->connection->prepare('SELECT * FROM *PREFIX*mimetypes');
+        $query->execute();
+        
+        $mimetypes = array();
+        while($row = $query->fetch()) {
+            $mimetypes[$row['mimetype']] = $row['id'];
+        }
+        
+        return $mimetypes;
+    }
+
     /**
      * this function count the user's file quantity
      * @return integer
@@ -38,9 +58,9 @@ class FileCount {
         
         $storage_id = 'home::'.$user;
 
-        $query = $this->connection->prepare('SELECT COUNT(*) FROM *PREFIX*filecache JOIN *PREFIX*storages ON *PREFIX*filecache.storage = *PREFIX*storages.numeric_id WHERE *PREFIX*filecache.path LIKE "files\/%" AND *PREFIX*filecache.mimetype = 2 AND *PREFIX*storages.id = ?');
+        $query = $this->connection->prepare('SELECT COUNT(*) FROM *PREFIX*filecache JOIN *PREFIX*storages ON *PREFIX*filecache.storage = *PREFIX*storages.numeric_id WHERE *PREFIX*filecache.path LIKE "files\/%" AND *PREFIX*filecache.mimetype = ? AND *PREFIX*storages.id = ?');
         
-		$query->execute(array($storage_id));
+		$query->execute(array($this->mimetypes['httpd/unix-directory'],$storage_id));
 
         $row = $query->fetch();
 
@@ -63,9 +83,9 @@ class FileCount {
         
         $storage_id = 'home::'.$user;
 
-        $query = $this->connection->prepare('SELECT COUNT(*) FROM *PREFIX*filecache JOIN *PREFIX*storages ON *PREFIX*filecache.storage = *PREFIX*storages.numeric_id WHERE *PREFIX*filecache.path LIKE "files\/%" AND *PREFIX*filecache.mimetype != 2 AND *PREFIX*filecache.mimetype != 6 AND *PREFIX*filecache.mimetype != 12 AND *PREFIX*storages.id = ?');
+        $query = $this->connection->prepare('SELECT COUNT(*) FROM *PREFIX*filecache JOIN *PREFIX*storages ON *PREFIX*filecache.storage = *PREFIX*storages.numeric_id WHERE *PREFIX*filecache.path LIKE "files\/%" AND *PREFIX*filecache.mimetype != ? AND *PREFIX*filecache.mimetype != ? AND *PREFIX*storages.id = ?');
         
-        $query->execute(array($storage_id));
+        $query->execute(array($this->mimetypes['httpd/unix-directory'], $this->mimetypes['application/octet-stream'], $storage_id));
 
         $row = $query->fetch();
 
