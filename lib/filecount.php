@@ -82,10 +82,16 @@ class FileCount {
         }
         
         $storage_id = 'home::'.$user;
-
-        $query = $this->connection->prepare('SELECT COUNT(*) FROM *PREFIX*filecache JOIN *PREFIX*storages ON *PREFIX*filecache.storage = *PREFIX*storages.numeric_id WHERE *PREFIX*filecache.path LIKE "files\/%" AND *PREFIX*filecache.mimetype != ? AND *PREFIX*filecache.mimetype != ? AND *PREFIX*storages.id = ?');
         
-        $query->execute(array($this->mimetypes['httpd/unix-directory'], $this->mimetypes['application/octet-stream'], $storage_id));
+        if(isset($this->mimetypes['application/octet-stream'])) {
+            $query = $this->connection->prepare('SELECT COUNT(*) FROM *PREFIX*filecache JOIN *PREFIX*storages ON *PREFIX*filecache.storage = *PREFIX*storages.numeric_id WHERE *PREFIX*filecache.path LIKE "files\/%" AND *PREFIX*filecache.mimetype != ? AND *PREFIX*filecache.mimetype != ? AND *PREFIX*storages.id = ?');
+            
+            $query->execute(array($this->mimetypes['httpd/unix-directory'], $this->mimetypes['application/octet-stream'], $storage_id));
+        } else {
+            $query = $this->connection->prepare('SELECT COUNT(*) FROM *PREFIX*filecache JOIN *PREFIX*storages ON *PREFIX*filecache.storage = *PREFIX*storages.numeric_id WHERE *PREFIX*filecache.path LIKE "files\/%" AND *PREFIX*filecache.mimetype != ? AND *PREFIX*storages.id = ?');
+            
+            $query->execute(array($this->mimetypes['httpd/unix-directory'], $storage_id));
+        }
 
         $row = $query->fetch();
 
