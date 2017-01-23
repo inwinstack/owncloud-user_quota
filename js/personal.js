@@ -43,12 +43,7 @@
         var quotatext = $('#quota #quotatext');
 
         if(quotatext.length) {
-            var used = getUsed($('#quota div'));
-            var span = $('<span>').attr({class : 'quota-ratio'});
-
-            span.append(used);
-            quotatext.append(span);
-            $('#quota').after(createContain());
+          $('#quota').after(createContain());
             
             
             getQuantity().done(function (result) {
